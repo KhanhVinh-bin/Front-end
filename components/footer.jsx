@@ -63,7 +63,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-white-300 hover:text-[#06b6d4] transition-colors">
+                <Link href="/g" className="text-white-300 hover:text-[#06b6d4] transition-colors">
                   Giới thiệu
                 </Link>
               </li>

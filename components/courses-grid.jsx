@@ -9,20 +9,40 @@ export default function CoursesGrid() {
   const [selectedLevel, setSelectedLevel] = useState("all")
   const [priceRange, setPriceRange] = useState([0, 20000000])
 
-  const courses = Array(9)
-    .fill(null)
-    .map((_, i) => ({
-      id: i + 1,
-      title: "Học C++",
-      instructor: "Nguyễn Hải Trường",
-      level: "Lập trình",
-      rating: 0.1,
-      students: "104k",
-      duration: "1k",
-      price: "900.000đ",
-      oldPrice: "1.200.000đ",
-      image: `/placeholder.svg?height=200&width=400&query=C++ course ${i + 1}`,
-    }))
+ const courseData = [
+  { title: "Học C++ Cơ Bản", image: "/images/cpp_basic.jpg" },
+  { title: "Học C++ Nâng Cao", image: "/images/cpp_advanced.jpg" },
+  { title: "Thuật Toán C++", image: "/images/cpp_algorithm.jpg" },
+  { title: "C++ OOP Toàn Tập", image: "/images/cpp_oop.jpg" },
+  { title: "Lập Trình Game Bằng C++", image: "/images/cpp_game.jpg" },
+  { title: "Cấu Trúc Dữ Liệu Với C++", image: "/images/cpp_data_structure.jpg" },
+  { title: "C# API Swagger Cơ Bản", image: "/images/cpp_beginner.jpg" },
+  { title: "C++ Design Patterns", image: "/images/cpp_patterns.jpg" },
+  { title: "Dự Án Cuối Khóa C++", image: "/images/cpp_project.jpg" },
+];
+
+// HÀM ĐỔI TIỀN VIỆT 1.XXX.XXXXđ
+const formatVND = (value) => value.toLocaleString("vi-VN") + "đ";
+
+const courses = courseData.map((course, i) => {
+  const priceValue = (Math.floor(Math.random() * 8) + 6) * 100000; // giá khuyến mãi
+  const oldPriceValue = priceValue + (Math.floor(Math.random() * 5) + 20) * 100000; // giá gốc
+
+  return {
+    id: i + 1,
+    title: course.title,
+    instructor: "Nguyễn Hải Trường",
+    level: "Lập trình",
+    rating: (Math.random() * 5).toFixed(1),
+    students: `${Math.floor(Math.random() * 200) + 50}k`,
+    duration: `${Math.floor(Math.random() * 40) + 10} giờ`,
+    price: formatVND(priceValue),
+    oldPrice: formatVND(oldPriceValue),
+    image: course.image,
+  };
+});
+
+
 
   const categories = [
     "Tất cả",

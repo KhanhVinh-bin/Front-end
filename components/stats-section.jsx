@@ -25,8 +25,8 @@ export default function StatsSection() {
   }, [])
 
   const stats = [
-    { icon: Users, value: "8 tỷ+", label: "Học viên", color: "text-[#06b6d4]" },
-    { icon: BookOpen, value: "100 tỷ+", label: "Khóa học", color: "text-[#7c3aed]" },
+    { icon: Users, value: "2000+", label: "Học viên", color: "text-[#06b6d4]" },
+    { icon: BookOpen, value: "100+", label: "Khóa học", color: "text-[#7c3aed]" },
     { icon: GraduationCap, value: "2", label: "Giảng viên", color: "text-[#10b981]" },
     { icon: TrendingUp, value: "36%", label: "Tỉ lệ hoàn thành", color: "text-[#f59e0b]" },
   ]
