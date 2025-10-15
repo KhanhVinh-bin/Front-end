@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { Eye, EyeOff, Mail, Lock } from "lucide-react"
+import { loginUser } from "../services/API"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -23,23 +24,27 @@ export default function LoginPage() {
     setError("")
     setIsLoading(true)
 
-    // Simulate login
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-
-    // Simulate error for demo
-    if (formData.password.length < 6) {
-      setError("Mật khẩu không đúng")
+    try {
+      const result = await loginUser(formData.email, formData.password)
+      
+      if (result.success) {
+        // Đăng nhập thành công
+        setIsLoading(false)
+        router.push("/")
+      } else {
+        // Đăng nhập thất bại
+        setError(result.message)
+        setIsLoading(false)
+        const passwordInput = document.getElementById("password")
+        passwordInput.classList.add("shake")
+        setTimeout(() => {
+          passwordInput.classList.remove("shake")
+        }, 500)
+      }
+    } catch (error) {
+      setError("Có lỗi xảy ra, vui lòng thử lại")
       setIsLoading(false)
-      const passwordInput = document.getElementById("password")
-      passwordInput.classList.add("shake")
-      setTimeout(() => {
-        passwordInput.classList.remove("shake")
-      }, 500)
-      return
     }
-
-    setIsLoading(false)
-    router.push("/dashboard")
   }
 
   const handleChange = (e) => {
@@ -54,12 +59,12 @@ export default function LoginPage() {
       <Header />
 
       <div className="py-16">
-        <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-[600px]  mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-xl shadow-lg p-8 zoom-in">
             {/* Logo */}
-            <div className="text-center mb-8">
-              <div className="inline-flex w-16 h-16 bg-gradient-to-br from-[#7c3aed] to-[#06b6d4] rounded-xl items-center justify-center mb-4">
-                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="text-center mb-8 mt-4">
+              <div className="inline-flex w-16 h-16 bg-gradient-to-br from-[] to-[] rounded-xl items-center justify-center mb-4">
+                <svg className="w-40 h-20  " fill="none" stroke="#6B5EDB" viewBox="0 0 22 22">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>

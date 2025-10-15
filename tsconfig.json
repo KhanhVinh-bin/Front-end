@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "hooks/use-mobile.jsx", "hooks/use-toast.jsx", "components/theme-provider.tsx", "components/ui/accordion.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "hooks/use-mobile.jsx", "hooks/use-toast.jsx", "components/theme-provider.tsx", "components/ui/accordion.jsx", "components/ui/alert-dialog.jsx", "components/ui/button.jsx", "components/ui/use-toast.jsx", "components/ui/toaster.jsx", "components/ui/alert.jsx"],
   "exclude": ["node_modules"]
 }

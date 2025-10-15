@@ -28,7 +28,7 @@ const team = [
   {
     name: "Nguyễn Hữu Tài",
     role: "Head of Education",
-    image: "/team-3.jpg",
+    image: "/team-4.jpg",
     bio: "15 năm kinh nghiệm trong lĩnh vực C++",
   },
   {
@@ -97,7 +97,7 @@ export default function AboutPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#7c3aed] to-[#06b6d4] py-20">
+      <section className="bg-[#6A5BF6] py-20 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Về EduLearn</h1>

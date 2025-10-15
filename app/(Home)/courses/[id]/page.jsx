@@ -10,7 +10,7 @@ export default function CourseDetailPage() {
   const params = useParams()
   const [showAuthModal, setShowAuthModal] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false)
-
+  const [activeTab, setActiveTab] = useState("overview")
   useEffect(() => {
     // Fade in animation on load
     const elements = document.querySelectorAll(".fade-in-element")
@@ -25,12 +25,35 @@ export default function CourseDetailPage() {
     setShowAuthModal(true)
   }
 
+  // Dữ liệu cho tab "Nội dung" (giống bố cục trong hình)
+  const curriculum = [
+    {
+      title: "Giới thiệu React",
+      meta: { lessons: "4 bài học", duration: "10 giờ" },
+      items: [
+        { title: "JSX cơ bản", time: "45 phút" },
+        { title: "Cấu trúc ứng dụng", time: "2 giờ 15 phút" },
+        { title: "JSX và Components", time: "2 giờ 15 phút" },
+        { title: "Props và State", time: "5 giờ" },
+      ],
+    },
+    {
+      title: "React nâng cao",
+      meta: { lessons: "8 bài học", duration: "35 giờ" },
+      items: [
+        { title: "Hiểu sâu về Hooks", time: "10 giờ" },
+        { title: "useEffect nâng cao & tối ưu Performance", time: "15 giờ" },
+        { title: "useMemo và useCallback", time: "10 giờ" },
+      ],
+    },
+  ]
+
   return (
     <div className="min-h-screen bg-white-50">
       <Header />
 
       {/* Hero Section */}
-      <section className="bg-navy text-white py-16">
+      <section className="bg-[#6A5BF6] text-white py-16">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Left Content */}
@@ -139,13 +162,34 @@ export default function CourseDetailPage() {
           <div className="max-w-4xl mx-auto">
             {/* Tabs */}
             <div className="flex gap-4 border-b border-white-300 mb-8">
-              <button className="px-6 py-3 font-semibold border-b-2 border-purple-600 text-purple-600">
+              <button
+                onClick={() => setActiveTab("overview")}
+                className={`px-6 py-3 font-semibold ${
+                  activeTab === "overview"
+                    ? "border-b-2 border-purple-600 text-purple-600"
+                    : "text-white-600 hover:text-purple-600 transition-colors"
+                }`}
+              >
                 Tổng quan
               </button>
-              <button className="px-6 py-3 font-semibold text-white-600 hover:text-purple-600 transition-colors">
+              <button
+                onClick={() => setActiveTab("content")}
+                className={`px-6 py-3 font-semibold ${
+                  activeTab === "content"
+                    ? "border-b-2 border-purple-600 text-purple-600"
+                    : "text-white-600 hover:text-purple-600 transition-colors"
+                }`}
+              >
                 Nội dung
               </button>
-              <button className="px-6 py-3 font-semibold text-white-600 hover:text-purple-600 transition-colors">
+              <button
+                onClick={() => setActiveTab("instructor")}
+                className={`px-6 py-3 font-semibold ${
+                  activeTab === "instructor"
+                    ? "border-b-2 border-purple-600 text-purple-600"
+                    : "text-white-600 hover:text-purple-600 transition-colors"
+                }`}
+              >
                 Giảng viên
               </button>
               <button className="px-6 py-3 font-semibold text-white-600 hover:text-purple-600 transition-colors">

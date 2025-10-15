@@ -101,8 +101,8 @@ export default function BlogPage() {
     <div className="min-h-screen bg-white-50">
       <Header />
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#7c3aed] to-[#06b6d4] py-20">
+       {/* Hero Section */}
+      <section className="bg-[#6A5BF6] py-20 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Blog & Tin tức</h1>
           <p className="text-xl text-white/90 max-w-2xl mx-auto">

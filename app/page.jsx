@@ -13,8 +13,8 @@ export default function HomePage() {
       <main>
         <HeroSection />
         <StatsSection />
-        <FeaturedCourses />
         <PopularCategories />
+        <FeaturedCourses />
         <CTASection />
       </main>
       <Footer />

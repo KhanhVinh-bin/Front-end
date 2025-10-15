@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { Eye, EyeOff, Mail, Lock, User, Phone } from "lucide-react"
+import { registerUser } from "../services/API"
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -71,11 +72,29 @@ export default function RegisterPage() {
     setErrors({})
     setIsLoading(true)
 
-    // Simulate registration
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-
-    setIsLoading(false)
-    router.push("/dashboard")
+    try {
+      const result = await registerUser(formData.email, formData.password, formData.name)
+      
+      if (result.success) {
+        // Đăng ký thành công
+        setIsLoading(false)
+        router.push("/login")
+      } else {
+        // Đăng ký thất bại
+        setErrors({ email: result.message })
+        setIsLoading(false)
+        const emailInput = document.getElementById("email")
+        if (emailInput) {
+          emailInput.classList.add("shake")
+          setTimeout(() => {
+            emailInput.classList.remove("shake")
+          }, 500)
+        }
+      }
+    } catch (error) {
+      setErrors({ general: "Có lỗi xảy ra, vui lòng thử lại" })
+      setIsLoading(false)
+    }
   }
 
   const handleChange = (e) => {
@@ -98,64 +117,71 @@ export default function RegisterPage() {
       <Header />
 
       <div className="py-16">
-        <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-[600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-xl shadow-lg p-8 zoom-in">
             {/* Logo */}
-            <div className="text-center mb-2">
-              <div className="inline-flex w-16 h-16 bg-gradient-to-br from-[#7c3aed] to-[#06b6d4] rounded-xl items-center justify-center mb-4">
-                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="text-center mb-8">
+              <div className="inline-flex w-16 h-16 bg-gradient-to-br from-[] to-[] rounded-xl items-center justify-center mb-4">
+                <svg className="w-40 h-20" fill="none" stroke="#6B5EDB" viewBox="0 0 22 22">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>
-            </div>
-
-            {/* Căn giữa tiêu đề và mô tả */}
-            
-            <div className="text-center ">
               <h1 className="text-3xl font-bold text-white-900 mb-2">Đăng ký</h1>
               <p>Nền Tảng Học Trực Tiếp Hàng Đầu</p>
+              {/* Toggle Buttons */}
+              <div className="flex bg-gray-100 rounded-full p-1 w-64 mx-auto justify-between mb-6">
+                <Link href="/login" className="text-center py-2 text-gray-700 hover:bg-gray-200 rounded-full transition">
+                  Đăng nhập
+                </Link>
+                <Link href="/register" className="w-4/6 text-center py-2 bg-black text-white rounded-full transition">
+                  Đăng ký
+                </Link>
+              </div>
             </div>
 
-            {/* Toggle Buttons (kéo xuống dưới logo, style đồng đều) */}
-            <div className="flex bg-gray-100 rounded-full p-1 w-64 mx-auto justify-between mb-6">
-              <Link href="/login" className=" text-center py-2 text-gray-700 hover:bg-gray-200 rounded-full transition">
-                Đăng nhập
-              </Link>
-              <Link href="/register" className="w-4/6 text-center py-2 bg-black text-white rounded-full transition">
-                Đăng ký
-              </Link>
-            </div>
+            {/* Error Messages */}
+            {errors.general && (
+              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-red-800 text-sm">{errors.general}</p>
+              </div>
+            )}
 
             {/* Register Form */}
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-white-700 mb-2">Họ và tên *</label>
+                <label htmlFor="name" className="block text-sm font-medium text-white-700 mb-2">Họ tên</label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white-400" />
                   <input
                     type="text"
                     id="name"
                     name="name"
+                    required
                     value={formData.name}
                     onChange={handleChange}
-                    className={`w-full pl-10 pr-4 py-3 bg-gray-200 border ${errors.name ? "border-red-500" : "border-gray-300"} rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7c3aed] focus:border-transparent`}
-                    placeholder="Nguyễn Văn A"
+                    className={`w-full pl-10 pr-4 py-3 bg-gray-200 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7c3aed] focus:border-transparent ${
+                      errors.name ? "border-red-300" : "border-gray-300"
+                    }`}
+                    placeholder="Nhập họ tên của bạn"
                   />
                 </div>
                 {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-white-700 mb-2">Email *</label>
+                <label htmlFor="email" className="block text-sm font-medium text-white-700 mb-2">Email</label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white-400" />
                   <input
                     type="email"
                     id="email"
                     name="email"
+                    required
                     value={formData.email}
                     onChange={handleChange}
-                    className={`w-full pl-10 pr-4 py-3 bg-gray-200 border ${errors.email ? "border-red-500" : "border-gray-300"} rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7c3aed] focus:border-transparent`}
+                    className={`w-full pl-10 pr-4 py-3 bg-gray-200 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7c3aed] focus:border-transparent ${
+                      errors.email ? "border-red-300" : "border-gray-300"
+                    }`}
                     placeholder="email@example.com"
                   />
                 </div>
@@ -179,16 +205,19 @@ export default function RegisterPage() {
               </div>
 
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-white-700 mb-2">Mật khẩu *</label>
+                <label htmlFor="password" className="block text-sm font-medium text-white-700 mb-2">Mật khẩu</label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white-400" />
                   <input
                     type={showPassword ? "text" : "password"}
                     id="password"
                     name="password"
+                    required
                     value={formData.password}
                     onChange={handleChange}
-                    className={`w-full pl-10 pr-12 py-3 bg-gray-200 border ${errors.password ? "border-red-500" : "border-gray-300"} rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7c3aed] focus:border-transparent`}
+                    className={`w-full pl-10 pr-12 py-3 bg-gray-200 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7c3aed] focus:border-transparent ${
+                      errors.password ? "border-red-300" : "border-gray-300"
+                    }`}
                     placeholder="••••••••"
                   />
                   <button
@@ -203,16 +232,19 @@ export default function RegisterPage() {
               </div>
 
               <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-white-700 mb-2">Xác nhận mật khẩu *</label>
+                <label htmlFor="confirmPassword" className="block text-sm font-medium text-white-700 mb-2">Xác nhận mật khẩu</label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white-400" />
                   <input
                     type={showConfirmPassword ? "text" : "password"}
                     id="confirmPassword"
                     name="confirmPassword"
+                    required
                     value={formData.confirmPassword}
                     onChange={handleChange}
-                    className={`w-full pl-10 pr-12 py-3 bg-gray-200 border ${errors.confirmPassword ? "border-red-500" : "border-gray-300"} rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7c3aed] focus:border-transparent`}
+                    className={`w-full pl-10 pr-12 py-3 bg-gray-200 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7c3aed] focus:border-transparent ${
+                      errors.confirmPassword ? "border-red-300" : "border-gray-300"
+                    }`}
                     placeholder="••••••••"
                   />
                   <button
@@ -233,7 +265,9 @@ export default function RegisterPage() {
                     name="agreeTerms"
                     checked={formData.agreeTerms}
                     onChange={handleChange}
-                    className={`w-4 h-4 mt-1 text-[#7c3aed] border-white-300 rounded focus:ring-[#7c3aed] ${errors.agreeTerms ? "border-red-500" : ""}`}
+                    className={`w-4 h-4 text-[#7c3aed] border rounded focus:ring-[#7c3aed] mt-1 ${
+                      errors.agreeTerms ? "border-red-300" : "border-gray-300"
+                    }`}
                   />
                   <span className="ml-2 text-sm text-white-600">
                     Tôi đồng ý với{" "}
