@@ -14,14 +14,20 @@
     "jsx": "preserve",
     "incremental": true,
     "plugins": [
-      {
-        "name": "next"
-      }
+      { "name": "next" }
     ],
+    "baseUrl": ".", 
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@data/*": ["Data/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "hooks/use-mobile.jsx", "hooks/use-toast.jsx", "components/theme-provider.tsx", "components/ui/accordion.jsx", "components/ui/alert-dialog.jsx", "components/ui/button.jsx", "components/ui/use-toast.jsx", "components/ui/toaster.jsx", "components/ui/alert.jsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.jsx",
+    ".next/types/**/*.ts"
+  ],
   "exclude": ["node_modules"]
 }

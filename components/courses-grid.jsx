@@ -14,15 +14,15 @@ export default function CoursesGrid() {
 
   // ✅ Dữ liệu khóa học cố định (giá không random)
   const courseData = [
-    { title: "Học C++ Cơ Bản", slug: "hoc-c-co-ban", image: "/images/cpp_basic.jpg", price: 600000, oldPrice: 900000 },
-    { title: "Học C++ Nâng Cao", slug: "hoc-c-nang-cao", image: "/images/cpp_advanced.jpg", price: 800000, oldPrice: 1200000 },
-    { title: "Thuật Toán C++", slug: "thuat-toan-cpp", image: "/images/cpp_algorithm.jpg", price: 750000, oldPrice: 1000000 },
-    { title: "C++ OOP Toàn Tập", slug: "c-oop-toan-tap", image: "/images/cpp_oop.jpg", price: 900000, oldPrice: 1500000 },
-    { title: "Lập Trình Game Bằng C++", slug: "lap-trinh-game-bang-cpp", image: "/images/cpp_game.jpg", price: 700000, oldPrice: 1100000 },
-    { title: "Cấu Trúc Dữ Liệu Với C++", slug: "cau-truc-du-lieu-voi-cpp", image: "/images/cpp_data_structure.jpg", price: 850000, oldPrice: 1300000 },
-    { title: "C# API Swagger Cơ Bản", slug: "c-api-swagger-co-ban", image: "/images/cpp_beginner.jpg", price: 650000, oldPrice: 950000 },
-    { title: "C++ Design Patterns", image: "/images/cpp_patterns.jpg", price: 950000, oldPrice: 1400000 },
-    { title: "Dự Án Cuối Khóa C++", image: "/images/cpp_project.jpg", price: 1000000, oldPrice: 1600000 },
+    { title: "Học C++ Cơ Bản", slug: "hoc-c-co-ban", image: "/hinhC++.webp", price: 600000, oldPrice: 900000 },
+    { title: "Học C++ Nâng Cao", slug: "hoc-c-nang-cao", image: "/advanced-c---development.jpg", price: 800000, oldPrice: 1200000 },
+    { title: "Thuật Toán C++", slug: "thuat-toan-cpp", image: "/c---for-beginners.jpg", price: 750000, oldPrice: 1000000 },
+    { title: "Khóa học phát triển React", slug: "react-co-ban", image: "/react-course-preview.jpg", price: 900000, oldPrice: 4000000 },
+    { title: "Lập Trình Game Bằng C++", slug: "lap-trinh-game-bang-cpp", image: "/cpp-course.jpg", price: 700000, oldPrice: 1100000 },
+    { title: "Cấu Trúc Dữ Liệu Với C++", slug: "cau-truc-du-lieu-voi-cpp", image: "/c---programming-course.jpg", price: 850000, oldPrice: 1300000 },
+    { title: "Node.js Backend Development", slug: "nodejs-backend", image: "/nodejs-course.jpg", price: 950000, oldPrice: 1400000 },
+    { title: "MongoDB Database", slug: "mongodb-database", image: "/mongodb-course.jpg", price: 650000, oldPrice: 950000 },
+    { title: "Dự Án Cuối Khóa C++", slug: "du-an-cuoi-khoa-cpp", image: "/placeholder.jpg", price: 1000000, oldPrice: 1600000 },
   ];
 
   // ✅ Không random nữa — chỉ map dữ liệu ra

@@ -14,9 +14,6 @@ export default function CourseCard({ course }) {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-         
-    
-  
 
         {/* Course Image */}
         <div className="relative h-48 bg-white-900 overflow-hidden">

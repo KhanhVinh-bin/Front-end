@@ -18,7 +18,7 @@
 .gvc-step-title { font-size: 12px; font-weight: 700; }
 .gvc-step-sub { font-size: 11px; opacity: 0.9; }
 .gvc-progress { width: 100%; height: 4px; border-radius: 9999px; background: rgba(255,255,255,0.65); margin: 8px 0 0; position: relative; }
-.gvc-progress::after { content: ""; position: absolute; left: 0; top: 0; height: 100%; width: 25%; background: #0f172a; border-radius: 9999px; transition: width .35s ease; }
+.gvc-progress::after { content: ""; position: absolute; left: 0; top: 0; height: 100%; width: 25%; background: #0f172a; border-radius: 9999px; }
 /* Progress width per step */
 .gvc-progress.is-step2::after { width: 50%; }
 .gvc-progress.is-step3::after { width: 75%; }
@@ -30,13 +30,10 @@
 
 /* Card */
 .gvc-card { background: #fff; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.06); padding: 16px; }
+.gvc-create-root .gvc-card { display: block; }
 .gvc-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
 .gvc-card-icon { width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; background: #eef2ff; }
-.gvc-card-title { font-size: 20px; font-weight: 800; letter-spacing: 0.2px; color: #0f172a; }
-
-/* Logo nền xanh cho tiêu đề "Thông tin cơ bản" */
-.gvc-card-icon.basic { background: #3b82f6; box-shadow: 0 4px 10px rgba(59,130,246,0.35); }
-.gvc-card-icon.basic svg { width: 18px; height: 18px; }
+.gvc-card-title { font-size: 20px; font-weight: 800; letter-spacing: 0.2px; color: #0f172a; margin: 0; }
 
 /* Fields */
 .gvc-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }

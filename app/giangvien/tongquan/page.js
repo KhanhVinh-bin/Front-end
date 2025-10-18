@@ -56,8 +56,8 @@ export default function GiangVienTongQuanPage() {
           <nav className="gv-nav">
             <ul>
               <li><Link href="/giangvien/tongquan" className="active">📊 Tổng quan</Link></li>
-              <li><Link href="/giangvien/khoahoc">📚 Khóa học</Link></li>
-              <li><Link href="#">👥 Học viên</Link></li>
+              <li><Link href="/giangvien/khoahoc" >📚 Khóa học</Link></li>
+              <li><Link href="/giangvien/hocvien">👥 Học viên</Link></li>
               <li><Link href="#">💰 Doanh thu</Link></li>
               <li><Link href="#">✉️ Tin nhắn</Link></li>
               <li><Link href="#">🗂️ Hồ sơ</Link></li>

@@ -1,52 +1,82 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import AuthModal from "@/components/auth-modal"
+import { getCourseById } from "@/app/(Home)/Data/mockCourses"
+import { useCart } from "@/lib/cart-context"
+
+
 
 export default function CourseDetailPage() {
   const params = useParams()
+  const router = useRouter()
+  const { addToCart, isInCart } = useCart()
   const [showAuthModal, setShowAuthModal] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false)
   const [activeTab, setActiveTab] = useState("overview")
+  const [course, setCourse] = useState(null)
+  const [loading, setLoading] = useState(true)
+
   useEffect(() => {
+    // Lấy thông tin khóa học từ ID
+    const courseId = params.id
+    const courseData = getCourseById(courseId)
+    
+    if (courseData) {
+      setCourse(courseData)
+    } else {
+      // Nếu không tìm thấy khóa học, chuyển hướng về trang 404 hoặc danh sách khóa học
+      router.push('/courses')
+      return
+    }
+    
+    setLoading(false)
+    
     // Fade in animation on load
-    const elements = document.querySelectorAll(".fade-in-element")
-    elements.forEach((el, index) => {
-      setTimeout(() => {
-        el.classList.add("visible")
-      }, index * 100)
-    })
-  }, [])
+    setTimeout(() => {
+      const elements = document.querySelectorAll(".fade-in-element")
+      elements.forEach((el, index) => {
+        setTimeout(() => {
+          el.classList.add("visible")
+        }, index * 100)
+      })
+    }, 100)
+  }, [params.id, router])
 
   const handleBuyNow = () => {
     setShowAuthModal(true)
   }
 
-  // Dữ liệu cho tab "Nội dung" (giống bố cục trong hình)
-  const curriculum = [
-    {
-      title: "Giới thiệu React",
-      meta: { lessons: "4 bài học", duration: "10 giờ" },
-      items: [
-        { title: "JSX cơ bản", time: "45 phút" },
-        { title: "Cấu trúc ứng dụng", time: "2 giờ 15 phút" },
-        { title: "JSX và Components", time: "2 giờ 15 phút" },
-        { title: "Props và State", time: "5 giờ" },
-      ],
-    },
-    {
-      title: "React nâng cao",
-      meta: { lessons: "8 bài học", duration: "35 giờ" },
-      items: [
-        { title: "Hiểu sâu về Hooks", time: "10 giờ" },
-        { title: "useEffect nâng cao & tối ưu Performance", time: "15 giờ" },
-        { title: "useMemo và useCallback", time: "10 giờ" },
-      ],
-    },
-  ]
+  const handleAddToCart = () => {
+    if (course) {
+      const cartItem = {
+        id: course.id,
+        title: course.title,
+        instructor: course.instructor.name,
+        price: parseFloat(course.price.replace(/[^\d]/g, '')), // Convert price string to number
+        image: course.image
+      }
+      addToCart(cartItem)
+      
+      // Show success message or redirect to cart
+      alert("Đã thêm khóa học vào giỏ hàng!")
+    }
+  }
+
+  // Hiển thị loading khi đang tải dữ liệu
+  if (loading || !course) {
+    return (
+      <div className="min-h-screen bg-white-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Đang tải thông tin khóa học...</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-white-50">
@@ -59,42 +89,41 @@ export default function CourseDetailPage() {
             {/* Left Content */}
             <div className="lg:col-span-2 fade-in-element">
               <span className="inline-block bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
-                Lập trình
+                {course.category}
               </span>
 
-              <h1 className="text-4xl font-bold mb-4">Khóa học phát triển React</h1>
+              <h1 className="text-4xl font-bold mb-4">{course.title}</h1>
 
               <p className="text-white-300 text-lg mb-6">
-                Khóa học React từ cơ bản đến nâng cao, bao gồm tất cả kiến thức cần thiết để trở thành một React
-                Developer chuyên nghiệp.
+                {course.description}
               </p>
 
               {/* Stats */}
               <div className="flex flex-wrap gap-6 mb-8">
                 <div className="flex items-center gap-2">
                   <span className="text-yellow-400">⭐</span>
-                  <span className="font-semibold">0.1</span>
-                  <span className="text-white-400">(2,300 lượt đánh giá)</span>
+                  <span className="font-semibold">{course.rating}</span>
+                  <span className="text-white-400">({course.reviews} lượt đánh giá)</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span>👥</span>
-                  <span className="font-semibold">104k</span>
+                  <span className="font-semibold">{course.students}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span>⏱️</span>
-                  <span className="font-semibold">1k</span>
+                  <span className="font-semibold">{course.duration}</span>
                 </div>
               </div>
 
               {/* Instructor */}
               <div className="flex items-center gap-4 bg-navy-light p-4 rounded-lg">
                 <div className="w-16 h-16 bg-white-600 rounded-full overflow-hidden">
-                  <img src="/instructor-teaching.jpg" alt="Instructor" className="w-full h-full object-cover" />
+                  <img src={course.instructor.avatar} alt="Instructor" className="w-full h-full object-cover" />
                 </div>
                 <div>
-                  <p className="font-semibold text-lg">Giảng viên: Hoàng Phúc</p>
+                  <p className="font-semibold text-lg">Giảng viên: {course.instructor.name}</p>
                   <p className="text-white-400 text-sm">
-                    Senior Frontend Developer với 800+ năm kinh nghiệm. Đã đào tạo hơn 500,000 học viên.
+                    {course.instructor.bio}
                   </p>
                 </div>
               </div>
@@ -113,7 +142,7 @@ export default function CourseDetailPage() {
                   }}
                 >
                   <img
-                    src="/react-course-preview.jpg"
+                    src={course.image}
                     alt="Course preview"
                     className="w-full h-48 object-cover transition-transform duration-500"
                     onLoad={() => setImageLoaded(true)}
@@ -125,12 +154,12 @@ export default function CourseDetailPage() {
                   </div>
                 </div>
 
-                <h3 className="text-xl font-bold mb-4 text-center">Khóa học phát triển React</h3>
+                <h3 className="text-xl font-bold mb-4 text-center">{course.title}</h3>
 
                 <div className="text-center mb-6">
-                  <div className="text-4xl font-bold text-green-600 mb-2">900.000đ</div>
-                  <div className="text-white-400 line-through text-lg">4.000.000đ</div>
-                  <div className="text-red-500 font-semibold mt-1">Giảm 78%</div>
+                  <div className="text-4xl font-bold text-green-600 mb-2">{course.price}</div>
+                  <div className="text-white-400 line-through text-lg">{course.oldPrice}</div>
+                  <div className="text-red-500 font-semibold mt-1">Giảm {course.discount}%</div>
                 </div>
 
                 <button
@@ -138,6 +167,18 @@ export default function CourseDetailPage() {
                   className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-4 rounded-lg font-bold text-lg mb-4 hover:from-purple-700 hover:to-purple-800 transition-all hover:shadow-lg hover:scale-105 active:scale-95 buy-now-btn"
                 >
                   Mua khóa học
+                </button>
+
+                <button
+                  onClick={handleAddToCart}
+                  disabled={isInCart(course?.id)}
+                  className={`w-full py-4 rounded-lg font-bold text-lg mb-4 transition-all hover:shadow-lg hover:scale-105 active:scale-95 ${
+                    isInCart(course?.id)
+                      ? "bg-gray-400 text-gray-600 cursor-not-allowed"
+                      : "bg-gradient-to-r from-green-600 to-green-700 text-white hover:from-green-700 hover:to-green-800"
+                  }`}
+                >
+                  {isInCart(course?.id) ? "Đã có trong giỏ hàng" : "Thêm vào giỏ hàng"}
                 </button>
 
                 <div className="flex gap-4">
@@ -197,67 +238,90 @@ export default function CourseDetailPage() {
               </button>
             </div>
 
-            {/* What you'll learn */}
-            <div className="bg-white rounded-xl shadow-md p-8 mb-8 fade-in-element">
-              <h2 className="text-2xl font-bold mb-6">Bạn sẽ học được gì?</h2>
-              <div className="grid md:grid-cols-2 gap-4">
-                {[
-                  "Nắm vững các khái niệm cơ bản về React",
-                  "Xây dựng ứng dụng web hiện đại với React Hooks",
-                  "Quản lý state với Context API và Redux",
-                  "Tích hợp API và xử lý bất đồng bộ",
-                  "Tối ưu hóa performance và best practices",
-                  "Deploy ứng dụng lên production",
-                ].map((item, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <span className="text-green-500 text-xl flex-shrink-0">✓</span>
-                    <span className="text-white-700">{item}</span>
+            {/* Overview Tab */}
+           <div className={`${activeTab === "overview" ? "block" : "hidden"}`}>
+  {/* What you'll learn */}
+  <div className="bg-white rounded-xl shadow-md p-8 mb-8 fade-in-element">
+    <h2 className="text-2xl font-bold mb-6">Bạn sẽ học được gì?</h2>
+    <div className="grid md:grid-cols-2 gap-4">
+      {course?.learningOutcomes?.map((item, index) => (
+        <div key={index} className="flex items-start gap-3">
+          <span className="text-green-500 text-xl flex-shrink-0">✓</span>
+          <span className="text-gray-700">{item}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  {/* Requirements */}
+  <div className="bg-white rounded-xl shadow-md p-8 mb-8 fade-in-element">
+    <h2 className="text-2xl font-bold mb-6">Yêu cầu</h2>
+    <ul className="space-y-3">
+      {course?.requirements?.map((requirement, index) => (
+        <li key={index} className="flex items-start gap-3">
+          <span className="text-gray-400">•</span>
+          <span className="text-gray-700">{requirement}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+
+               
+            {/* Course Content Tab */}
+            <div className={`${activeTab === "overview" ? "block" : "hidden"}`}>
+  {/* What you'll learn */}
+  <div className="bg-white rounded-xl shadow-md p-8 mb-8 fade-in-element">
+    <h2 className="text-2xl font-bold mb-6">Bạn sẽ học được gì?</h2>
+    <div className="grid md:grid-cols-2 gap-4">
+      {course?.learningOutcomes?.map((item, index) => (
+        <div key={index} className="flex items-start gap-3">
+          <span className="text-green-500 text-xl flex-shrink-0">✓</span>
+          <span className="text-gray-700">{item}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  {/* Requirements */}
+  <div className="bg-white rounded-xl shadow-md p-8 mb-8 fade-in-element">
+    <h2 className="text-2xl font-bold mb-6">Yêu cầu</h2>
+    <ul className="space-y-3">
+      {course?.requirements?.map((requirement, index) => (
+        <li key={index} className="flex items-start gap-3">
+          <span className="text-gray-400">•</span>
+          <span className="text-gray-700">{requirement}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+
+            {/* Instructor Tab */}
+            {activeTab === "instructor" && (
+              <div className="bg-white rounded-xl shadow-md p-8 mb-8 fade-in-element">
+                <h2 className="text-2xl font-bold mb-6">Thông tin giảng viên</h2>
+                <div className="flex items-start gap-6">
+                  <div className="w-32 h-32 rounded-full overflow-hidden flex-shrink-0">
+                    <img src={course.instructor.avatar} alt={course.instructor.name} className="w-full h-full object-cover" />
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Requirements */}
-            <div className="bg-white rounded-xl shadow-md p-8 mb-8 fade-in-element">
-              <h2 className="text-2xl font-bold mb-6">Yêu cầu</h2>
-              <ul className="space-y-3">
-                <li className="flex items-start gap-3">
-                  <span className="text-white-400">•</span>
-                  <span className="text-white-700">Kiến thức cơ bản về HTML, CSS, JavaScript</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-white-400">•</span>
-                  <span className="text-white-700">Máy tính có thể cài đặt Node.js</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-white-400">•</span>
-                  <span className="text-white-700">Hiểu biết về ES6+ features</span>
-                </li>
-              </ul>
-            </div>
-
-            {/* Course Info */}
-            <div className="bg-white rounded-xl shadow-md p-8 fade-in-element">
-              <h2 className="text-2xl font-bold mb-6">Thông tin khóa học</h2>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="flex justify-between py-3 border-b border-white-200">
-                  <span className="text-white-600">Cấp độ:</span>
-                  <span className="font-semibold">Trung cấp</span>
-                </div>
-                <div className="flex justify-between py-3 border-b border-white-200">
-                  <span className="text-white-600">Thời lượng:</span>
-                  <span className="font-semibold">45h</span>
-                </div>
-                <div className="flex justify-between py-3 border-b border-white-200">
-                  <span className="text-white-600">Ngôn ngữ:</span>
-                  <span className="font-semibold">React</span>
-                </div>
-                <div className="flex justify-between py-3 border-b border-white-200">
-                  <span className="text-white-600">Chứng chỉ:</span>
-                  <span className="font-semibold">Có</span>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold mb-2">{course.instructor.name}</h3>
+                    <p className="text-gray-600 mb-4">{course.instructor.title}</p>
+                    <p className="text-gray-700 leading-relaxed">{course.instructor.fullBio}</p>
+                    <div className="mt-4 flex gap-4 text-sm text-gray-600">
+                      <span>👥 {course.instructor.totalStudents} học viên</span>
+                      <span>⭐ {course.instructor.rating} đánh giá</span>
+                      <span>📚 {course.instructor.totalCourses} khóa học</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
+            
+            
           </div>
         </div>
       </section>

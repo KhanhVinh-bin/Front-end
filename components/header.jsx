@@ -5,9 +5,11 @@ import Link from "next/link"
 import { Search, Menu, X, ShoppingCart, BookOpen, Settings, LogOut } from "lucide-react"
 import { getCurrentUser, logout } from "../app/(Home)/services/API"
 import { useRouter } from "next/navigation"
+import { useCart } from "@/lib/cart-context"
 
 export default function Header() {
   const router = useRouter()
+  const { getCartItemsCount } = useCart()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [currentUser, setCurrentUser] = useState(null)
   const [showUserMenu, setShowUserMenu] = useState(false)
@@ -73,8 +75,13 @@ export default function Header() {
 
           {/* User + Cart */}
           <div className="flex items-center gap-4">
-            <Link href="/cart" className="text-gray-800 hover:text-[#6B5EDB] transition">
+            <Link href="/cart" className="relative text-gray-800 hover:text-[#6B5EDB] transition">
               <ShoppingCart className="h-6 w-6" />
+              {getCartItemsCount() > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  {getCartItemsCount()}
+                </span>
+              )}
             </Link>
 
             {currentUser ? (
@@ -97,12 +104,12 @@ export default function Header() {
                     <button
                       onClick={() => {
                         setShowUserMenu(false)
-                        router.push("/learning")
+                        router.push("/khoa-hoc-cua-toi")
                       }}
                       className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-[#F6F4FF] transition"
                     >
                       <BookOpen className="w-4 h-4 mr-2 text-[#6B5EDB]" />
-                      Trang học tập
+                      Học Tập
                     </button>
 
                     {/* Cài đặt */}

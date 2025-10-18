@@ -126,7 +126,7 @@ export default function DashboardPage() {
 
         {/* My Courses */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold mb-6">Khóa học của tôi</h2>
+          <h2 className="text-2xl font-bold mb-6">Học Tập</h2>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {myCourses.map((course, index) => (

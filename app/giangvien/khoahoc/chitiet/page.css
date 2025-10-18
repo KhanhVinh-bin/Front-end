@@ -3,7 +3,7 @@
 /* Thanh tiến độ: bước 2 được set qua class .is-step2 */
 
 /* Tinh chỉnh nhỏ cho trang chi tiết nếu cần */
-.gvc-card-title { font-size: 20px; font-weight: 800; }
+.gvc-card-title { font-size: 20px; font-weight: 800; margin: 0; }
 .gvc-create-grid { max-width: 900px; width: 100%; margin: 24px auto; padding: 0 16px; display: grid; grid-template-columns: 1fr; gap: 20px; }
 
 /* Màu icon theo thẻ giống thiết kế */

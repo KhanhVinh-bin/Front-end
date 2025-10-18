@@ -56,12 +56,7 @@ export default function ChiTietKhoaHocPage() {
         {/* Giá & Thông tin */}
         <section className="gvc-card">
           <div className="gvc-card-header">
-            <div className="gvc-card-icon green" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 7c-3 0-3 3 0 3s3 3 0 3m0-9v9" />
-              </svg>
-            </div>
-            <div className="gvc-card-title">Giá & Thông tin</div>
+            <h1 className="gvc-card-title">Giá & Thông tin</h1>
           </div>
 
           <div className="gvc-row">
@@ -93,12 +88,7 @@ export default function ChiTietKhoaHocPage() {
         {/* Thẻ từ khóa */}
         <section className="gvc-card">
           <div className="gvc-card-header">
-            <div className="gvc-card-icon blue" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6.5c1-.8 2.6-1.3 4.5-1.3S11 5.7 12 6.5v11c-1-.8-2.6-1.3-4.5-1.3S4 16.7 3 17.5v-11zm9 0c1-.8 2.6-1.3 4.5-1.3S19.9 5.7 21 6.5v11c-1-.8-2.6-1.3-4.5-1.3S13 16.7 12 17.5v-11z" />
-              </svg>
-            </div>
-            <div className="gvc-card-title">Thẻ từ khóa</div>
+            <h1 className="gvc-card-title">Thẻ từ khóa</h1>
           </div>
 
           <label className="gvc-field">
@@ -115,13 +105,7 @@ export default function ChiTietKhoaHocPage() {
         <div className="gvc-row">
           <section className="gvc-card">
             <div className="gvc-card-header">
-              <div className="gvc-card-icon orange" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff">
-                  <circle cx="12" cy="12" r="9" strokeWidth="2" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4" />
-                </svg>
-              </div>
-              <div className="gvc-card-title">Yêu cầu tiên quyết</div>
+              <h1 className="gvc-card-title">Yêu cầu tiên quyết</h1>
             </div>
             <div className="gvc-hint" style={{textAlign:"center"}}>Chưa có yêu cầu nào</div>
             <div className="gvc-row two">
@@ -132,14 +116,7 @@ export default function ChiTietKhoaHocPage() {
 
           <section className="gvc-card">
             <div className="gvc-card-header">
-              <div className="gvc-card-icon purple" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff">
-                  <rect x="5" y="4" width="14" height="16" rx="2" strokeWidth="2" />
-                  <circle cx="12" cy="9" r="2" strokeWidth="2" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 13h8M9 16h6" />
-                </svg>
-              </div>
-              <div className="gvc-card-title">Kết quả học tập</div>
+              <h1 className="gvc-card-title">Kết quả học tập</h1>
             </div>
             <div className="gvc-hint" style={{textAlign:"center"}}>Chưa có kết quả nào</div>
             <div className="gvc-row two">
