@@ -1,24 +1,36 @@
 "use client"
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useState, useEffect } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { CheckCircle2 } from "lucide-react"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
+import { useAuth } from "@/lib/auth-context"
 
 export default function LoginPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const { login } = useAuth()
   const [userType, setUserType] = useState("student") // student or instructor
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
   const [shakeInput, setShakeInput] = useState(false)
+  const [redirectUrl, setRedirectUrl] = useState(null)
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     rememberMe: false,
   })
+
+  useEffect(() => {
+    // Lấy redirect URL từ query params
+    const redirect = searchParams.get('redirect')
+    if (redirect) {
+      setRedirectUrl(decodeURIComponent(redirect))
+    }
+  }, [searchParams])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -92,18 +104,26 @@ export default function LoginPage() {
     }
 
     // Save user data với key "currentUser" để header có thể đọc được
-    localStorage.setItem(
-      "currentUser",
-      JSON.stringify({
-        id: validUser.type === "student" ? 2 : 3,
-        name: validUser.type === "student" ? "Học viên" : "Giảng viên",
-        email: formData.email,
-        type: validUser.type,
-      }),
-    )
+    const userData = {
+      id: validUser.type === "student" ? 2 : 3,
+      name: validUser.type === "student" ? "Học viên" : "Giảng viên",
+      email: formData.email,
+      type: validUser.type,
+    }
+    
+    localStorage.setItem("currentUser", JSON.stringify(userData))
+    
+    // Cập nhật auth context
+    login(userData)
 
     setIsLoading(false)
-    router.push("/")
+    
+    // Redirect về trang được yêu cầu hoặc trang chủ
+    if (redirectUrl) {
+      router.push(redirectUrl)
+    } else {
+      router.push("/")
+    }
   }
 
   const studentBenefits = [

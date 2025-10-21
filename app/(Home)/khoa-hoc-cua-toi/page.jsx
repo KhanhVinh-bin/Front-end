@@ -219,9 +219,12 @@ export default function MyCoursesPage() {
                       {/* Footer */}
                       <div className="flex items-center justify-between pt-4 border-t border-gray-200">
                         <span className="text-xs text-gray-500">{course.daysLeft}</span>
-                        <button className="px-4 py-2 bg-black text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                        <Link 
+                          href={`/bai-hoc/${course.id}`}
+                          className="px-4 py-2 bg-black text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors"
+                        >
                           {course.status}
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   </div>

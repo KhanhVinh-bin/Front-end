@@ -1,6 +1,8 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { Star, Users, BookOpen, Award } from "lucide-react"
@@ -19,6 +21,13 @@ const instructor = {
 }
 
 export default function CourseInstructorPage() {
+  const [activeTab, setActiveTab] = useState("instructor")
+  const router = useRouter()
+
+  const handleReviewsClick = () => {
+    router.push("/courses/1")
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -39,7 +48,12 @@ export default function CourseInstructorPage() {
               <Link href="/courses" className="px-4 py-2 rounded-full text-white hover:bg-white/20">Tổng quan</Link>
               <Link href="/courses/noidung" className="px-4 py-2 rounded-full text-white hover:bg-white/20">Nội dung</Link>
               <Link href="/courses/giangvien" className="px-4 py-2 rounded-full bg-white text-[#0b0f3b]">Giảng viên</Link>
-              <Link href="/courses/danhgia" className="px-4 py-2 rounded-full text-white hover:bg-white/20">Đánh giá</Link>
+              <button 
+  onClick={handleReviewsClick}
+  className="px-4 py-2 rounded-full text-white hover:bg-white/20"
+>
+  Đánh giá
+</button>
             </div>
           </div>
         </div>

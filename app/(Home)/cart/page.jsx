@@ -122,7 +122,7 @@ export default function CartPage() {
                   <div className="space-y-4 mb-6">
                     <div className="flex justify-between text-gray-600">
                       <span>Tạm tính:</span>
-                      <span>{formatPrice(getCartTotal())}</span>
+                     <span>{formatPrice(typeof singleCourse !== "undefined" ? singleCourse.price : getCartTotal())}</span>
                     </div>
                     <div className="border-t pt-4 flex justify-between text-lg font-bold">
                       <span>Tổng cộng:</span>

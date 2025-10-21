@@ -1,6 +1,8 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { Clock, CheckCircle } from "lucide-react"
@@ -28,8 +30,15 @@ const curriculum = [
 ]
 
 export default function CourseContentPage() {
+  const [activeTab, setActiveTab] = useState("content")
+  const router = useRouter()
+
+  const handleReviewsClick = () => {
+    router.push("/courses/1")
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header />
 
       {/* Hero */}
@@ -49,14 +58,19 @@ export default function CourseContentPage() {
               <Link href="/courses" className="px-4 py-2 rounded-full text-white hover:bg-white/20">Tổng quan</Link>
               <Link href="/courses/noidung" className="px-4 py-2 rounded-full bg-white text-[#0b0f3b] font-medium">Nội dung</Link>
               <Link href="/courses/giangvien" className="px-4 py-2 rounded-full text-white hover:bg-white/20">Giảng viên</Link>
-              <Link href="/courses/danhgia" className="px-4 py-2 rounded-full text-white hover:bg-white/20">Đánh giá</Link>
+              <button 
+  onClick={handleReviewsClick}
+  className="px-4 py-2 rounded-full text-white hover:bg-white/20"
+>
+  Đánh giá
+</button>
             </div>
           </div>
         </div>
       </section>
 
       {/* Content */}
-      <section className="py-10 bg-white">
+      <section className="flex-1 py-10 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
             {curriculum.map((section, idx) => (

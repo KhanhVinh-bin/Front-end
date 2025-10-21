@@ -1,8 +1,21 @@
 @import url("../tao/page.css");
 
+/* Layout chính để đẩy footer xuống cuối */
+.gvc-create-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.gvc-create-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 /* Phần thân cho trang nội dung */
 .gvc-card-title { font-size: 20px; font-weight: 800; }
-.gvc-create-grid { max-width: 1100px; width: 100%; margin: 24px auto; padding: 0 16px; display: grid; grid-template-columns: 1fr; gap: 20px; }
+.gvc-create-grid { max-width: 1100px; width: 100%; margin: 24px auto; padding: 0 16px; display: grid; grid-template-columns: 1fr; gap: 20px; flex: 1; }
 
 /* Icon màu tím giống ảnh */
 .gvc-card-icon { width: 32px; height: 32px; display:grid; place-items:center; border-radius: 10px; box-shadow: 0 8px 16px rgba(124,58,237,0.18); }
