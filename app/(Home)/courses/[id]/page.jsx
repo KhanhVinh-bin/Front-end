@@ -84,8 +84,8 @@ export default function CourseDetailPage() {
 
  const handleBuyNow = () => {
   if (!isAuthenticated()) {
-    const redirectUrl = `/thanhtoan?courseId=${course.id}`
-    router.push(`/login?redirect=${encodeURIComponent(redirectUrl)}`)
+  const redirectUrl = `/thanhtoan?courseId=${course.id}`
+  router.push(`/login?redirect=${encodeURIComponent(redirectUrl)}`)
   } else {
     router.push(`/thanhtoan?courseId=${course.id}`)
   }
@@ -223,16 +223,7 @@ export default function CourseDetailPage() {
                   {isInCart(course?.id) ? "Đã có trong giỏ hàng" : "Thêm vào giỏ hàng"}
                 </button>
 
-                <div className="flex gap-4">
-                  <button className="flex-1 border-2 border-white-300 py-3 rounded-lg hover:bg-white-50 transition-colors flex items-center justify-center gap-2">
-                    <span>❤️</span>
-                    <span>Yêu thích</span>
-                  </button>
-                  <button className="flex-1 border-2 border-white-300 py-3 rounded-lg hover:bg-white-50 transition-colors flex items-center justify-center gap-2">
-                    <span>🔗</span>
-                    <span>Chia sẻ</span>
-                  </button>
-                </div>
+                
               </div>
             </div>
           </div>

@@ -124,36 +124,21 @@ export default function NoiDungChuongPage() {
               </div>
               <div className="gvc-card-title">Nội dung chương trình học</div>
             </div>
-            <button type="button" className="gvc-btn gradient gvc-add-chapter" onClick={addChapter}>
-              <span className="gvc-btn-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v12M6 12h12" />
-                </svg>
-              </span>
-              <span>Thêm chương mới</span>
-            </button>
+            
           </div>
 
           {chapters.map((ch) => (
             <div key={ch.id} className="gvc-chapter">
-              <div className="gvc-chapter-head">
-                <input className="gvc-input gvc-chapter-title" value={ch.title}
-                  onChange={(e)=>updateChapter(ch.id,{ title: e.target.value })} />
-                <button type="button" className="gvc-btn icon" title="Xóa chương" onClick={()=>removeChapter(ch.id)}>
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#6b7280">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 6h18M9 6V4h6v2m-8 4v8a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V10" />
-                  </svg>
-                </button>
-              </div>
-              <textarea className="gvc-textarea gvc-chapter-desc" rows={3} placeholder="Mô tả chi tiết nội dung chương..."
-                value={ch.desc} onChange={(e)=>updateChapter(ch.id,{ desc: e.target.value })} />
+              
+
 
               <div className="gvc-lessons-head">
                 <div className="gvc-lessons-title">
                   <span className="gvc-lessons-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                      <rect x="4" y="6" width="16" height="12" rx="3" strokeWidth="2" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12l3-2v4l3-2" />
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="14" height="14" fill="none" stroke="currentColor">
+                      <rect width="256" height="256" fill="none" />
+                      <path d="M24,60H152a32,32,0,0,1,32,32v96a8,8,0,0,1-8,8H48a32,32,0,0,1-32-32V68A8,8,0,0,1,24,60Z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="12" />
+                      <polyline points="184 112 240 80 240 176 184 144" strokeLinecap="round" strokeLinejoin="round" strokeWidth="12" />
                     </svg>
                   </span>
                   Bài học ({ch.lessons.length})
@@ -183,9 +168,10 @@ export default function NoiDungChuongPage() {
                         <button type="button" className="gvc-btn light gvc-type-toggle" onClick={()=>toggleTypeMenu(ch.id, ls.id)}>
                           <span className="gvc-type-icon" aria-hidden="true">
                             {ls.type === "video" && (
-                              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor">
-                                <rect x="4" y="6" width="16" height="12" rx="3" strokeWidth="2" />
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12l3-2v4l3-2" />
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="16" height="16" fill="none" stroke="currentColor">
+                                <rect width="256" height="256" fill="none" />
+                                <path d="M24,60H152a32,32,0,0,1,32,32v96a8,8,0,0,1-8,8H48a32,32,0,0,1-32-32V68A8,8,0,0,1,24,60Z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="12" />
+                                <polyline points="184 112 240 80 240 176 184 144" strokeLinecap="round" strokeLinejoin="round" strokeWidth="12" />
                               </svg>
                             )}
                             {ls.type === "document" && (
@@ -209,7 +195,6 @@ export default function NoiDungChuongPage() {
                           </span>
                           <span className="gvc-type-label">
                             {ls.type === "video" && "Video"}
-                            {ls.type === "voice" && "Voice"}
                             {ls.type === "document" && "Tài liệu"}
                             {ls.type === "quiz" && "Bài kiểm tra"}
                           </span>
@@ -223,9 +208,10 @@ export default function NoiDungChuongPage() {
                           <div className="gvc-type-menu">
                             <button className="gvc-type-item" onClick={()=>selectType(ch.id, ls.id, "video")}>
                               <span className="gvc-type-icon">
-                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor">
-                                  <rect x="4" y="6" width="16" height="12" rx="3" strokeWidth="2" />
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12l3-2v4l3-2" />
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="16" height="16" fill="none" stroke="currentColor">
+                                  <rect width="256" height="256" fill="none" />
+                                  <path d="M24,60H152a32,32,0,0,1,32,32v96a8,8,0,0,1-8,8H48a32,32,0,0,1-32-32V68A8,8,0,0,1,24,60Z" stroke-linecap="round" stroke-linejoin="round" stroke-width="12" />
+                                  <polyline points="184 112 240 80 240 176 184 144" stroke-linecap="round" stroke-linejoin="round" stroke-width="12" />
                                 </svg>
                               </span>
                               <span>Video</span>
@@ -269,37 +255,65 @@ export default function NoiDungChuongPage() {
                                 </span>
                               )}
                             </button>
+
                           </div>
                         )}
                       </div>
 
-                      <input className="gvc-input gvc-lesson-duration" placeholder="VD: 15:30" value={ls.duration}
-                        onChange={(e)=>updateLesson(ch.id, ls.id, { duration: e.target.value })} />
-
-                      <div className="gvc-lesson-content">
-                        <div className="gvc-drop">
-                          <div className="gvc-drop-icons" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#64748b">
-                              <rect x="4" y="6" width="16" height="12" rx="3" strokeWidth="2" />
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12l3-2v4l3-2" />
-                            </svg>
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#64748b">
-                              <rect x="6" y="4" width="12" height="16" rx="2" strokeWidth="2" />
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 8h8M8 12h8M8 16h8" />
-                            </svg>
-                          </div>
-                          <div className="gvc-drop-label">Tải lên nội dung</div>
-                          <input id={inputId} type="file" hidden accept="video/*,audio/*,application/pdf"
-                            onChange={(e)=>{
-                              const name = e.target.files?.[0]?.name || ""
-                              updateLesson(ch.id, ls.id, { fileName: name })
-                            }} />
-                          <button type="button" className="gvc-upload-link" onClick={()=>document.getElementById(inputId)?.click()}>Upload </button>
-                        </div>
-                        {ls.fileName && <div className="gvc-upload-name">{ls.fileName}</div>}
-                      </div>
-
                       <button type="button" className="gvc-btn icon" onClick={()=>removeLesson(ch.id, ls.id)}>×</button>
+
+                      <div className="gvc-lesson-controls">
+                        <div className="gvc-field">
+                          <div className="gvc-field-label">Thời lượng</div>
+                          <input className="gvc-input gvc-lesson-duration" placeholder="VD: 15:30" value={ls.duration}
+                            onChange={(e)=>updateLesson(ch.id, ls.id, { duration: e.target.value })} />
+                        </div>
+
+                        <div className="gvc-field">
+                          <div className="gvc-field-label">Tải lên nội dung</div>
+                          <div className="gvc-lesson-content">
+                            <div className="gvc-drop" onClick={()=>document.getElementById(inputId)?.click()}>
+                              <input type="file" id={inputId} hidden
+                                accept={ls.type === "video" ? "video/*" : ls.type === "voice" ? "audio/*" : ls.type === "document" ? "application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" : "*/*"}
+                                onChange={(e)=>{
+                                  const name = e.target.files?.[0]?.name || ""
+                                  updateLesson(ch.id, ls.id, { fileName: name })
+                                }} />
+                              <span className="gvc-upload-icon" aria-hidden="true">
+                                {ls.type === "video" && (
+                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="20" height="20" fill="none" stroke="#64748b">
+                                    <rect width="256" height="256" fill="none" />
+                                    <path d="M24,60H152a32,32,0,0,1,32,32v96a8,8,0,0,1-8,8H48a32,32,0,0,1-32-32V68A8,8,0,0,1,24,60Z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="12" />
+                                    <polyline points="184 112 240 80 240 176 184 144" strokeLinecap="round" strokeLinejoin="round" strokeWidth="12" />
+                                  </svg>
+                                )}
+                                {ls.type === "document" && (
+                                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#64748b">
+                                    <rect x="6" y="4" width="12" height="16" rx="2" strokeWidth="2" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 8h8M8 12h8M8 16h8" />
+                                  </svg>
+                                )}
+                                {ls.type === "quiz" && (
+                                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#64748b">
+                                    <circle cx="12" cy="12" r="9" strokeWidth="2" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4" />
+                                  </svg>
+                                )}
+                                {ls.type === "voice" && (
+                                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#64748b">
+                                    <rect x="9" y="5" width="6" height="10" rx="3" strokeWidth="2" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v3m-4-6a4 4 0 008 0" />
+                                  </svg>
+                                )}
+                              </span>
+                              <span className="gvc-drop-text">
+                                {ls.type === "document" ? "Tài liệu" : ls.type === "voice" ? "Audio" : ls.type === "quiz" ? "Bài kiểm tra" : "Video"}
+                              </span>
+                            </div>
+                            {ls.fileName && <div className="gvc-upload-name">{ls.fileName}</div>}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   )
                 })}

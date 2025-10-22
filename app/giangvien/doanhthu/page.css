@@ -1,0 +1,48 @@
+/* New Doanh thu dashboard styles */
+
+:root{
+	--bg:#f8fafc;
+	--card:#ffffff;
+	--muted:#6b7280;
+}
+
+.gv-dashboard-root{ min-height:100vh; background:var(--bg); font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial }
+.gv-topbar{ height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 24px; background:#fff; border-bottom:1px solid #eef2f6 }
+.gv-brand-mini{ display:flex; align-items:center; gap:8px; font-weight:700 }
+.gv-avatar{ width:36px; height:36px; border-radius:50%; background:#e8ecff; display:flex; align-items:center; justify-content:center; color:#334155 }
+.gv-notifs{ margin-right:12px }
+
+.gv-dashboard{ display:flex; gap:24px; padding:24px }
+.gv-sidebar{ width:220px }
+.gv-nav ul{ list-style:none; padding:12px; margin:0 }
+.gv-nav li{ padding:10px 12px; color:#475569 }
+.gv-nav a{ color:inherit; text-decoration:none }
+.gv-nav .active{ background:#eef2ff; border-radius:8px; display:inline-block; padding:8px }
+
+.gv-main{ flex:1; background:transparent }
+.page-title{ font-size:20px; margin:6px 0 16px; color:#111827 }
+
+.summary-cards{ display:grid; grid-template-columns: repeat(3,1fr); gap:20px; margin-bottom:24px }
+.summary-card{ background:var(--card); padding:18px; border-radius:12px; box-shadow:0 1px 3px rgba(15,23,42,0.04); position:relative }
+.summary-card .sc-top{ color:var(--muted); font-weight:700 }
+.summary-card .sc-value{ font-size:24px; font-weight:800; margin-top:6px }
+.summary-card .sc-sub{ color:#94a3b8; margin-top:6px }
+.summary-card.green{ background:linear-gradient(90deg,#ecfdf5,#ecf9f0); color:#065f46 }
+.summary-card.blue{ background:linear-gradient(90deg,#eef2ff,#f7f9ff); color:#0ea5e9; display:flex; flex-direction:column; justify-content:space-between }
+.summary-card.pink{ background:linear-gradient(90deg,#fff0f6,#fff7fb); color:#be185d }
+.sc-action{ margin-top:8px; background:#0ea5e9; color:#fff; padding:8px 12px; border-radius:8px; border:none }
+
+.chart-card{ background:var(--card); padding:18px; border-radius:12px; box-shadow:0 1px 3px rgba(15,23,42,0.04) }
+.chart-card h2{ margin:0 0 12px }
+.bar-chart{ width:100%; height:260px; background:transparent; padding:12px 0 }
+.bar-chart svg{ width:100%; height:100%; display:block }
+
+/* Make the bars purple and labels muted */
+.bar-chart rect{ fill:#8b5cf6 }
+.bar-chart text{ fill:#374151; font-family:inherit }
+
+@media (max-width: 900px){
+	.gv-dashboard{ flex-direction:column }
+	.gv-sidebar{ width:100% }
+	.summary-cards{ grid-template-columns:1fr }
+}

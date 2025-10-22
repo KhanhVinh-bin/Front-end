@@ -2,10 +2,27 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Star, Users, Clock, Play } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { Star, Users, Clock, Play, ShoppingCart } from "lucide-react"
+import { useAuth } from "@/lib/auth-context"
 
 export default function CourseCard({ course }) {
   const [isHovered, setIsHovered] = useState(false)
+  const { isAuthenticated } = useAuth()
+  const router = useRouter()
+
+  const handleBuyNow = (e) => {
+    e.preventDefault() // Ngăn chặn navigation của Link
+    e.stopPropagation()
+    
+    if (!isAuthenticated()) {
+    const redirectUrl = `/thanhtoan?courseId=${course.id}`
+    router.push(`/login?redirect=${encodeURIComponent(redirectUrl)}`)
+    } else {
+      router.push(`/thanhtoan?courseId=${course.id}`)
+    }
+    localStorage.setItem('token', data.token)
+  }
 
   return (
     <Link href={`/courses/${course.slug}`}>
