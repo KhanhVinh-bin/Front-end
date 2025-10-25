@@ -14,7 +14,6 @@ export default function HomePage() {
         <HeroSection />
         <StatsSection />
         <FeaturedCourses />
-        <PopularCategories />
         <CTASection />
       </main>
       <Footer />

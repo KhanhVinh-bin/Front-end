@@ -1,5 +1,5 @@
 "use client"
-
+import Link from 'next/link'
 import { useState } from "react"
 import CourseCard from "./course-card"
 import { Search, SlidersHorizontal } from "lucide-react"
@@ -9,41 +9,38 @@ export default function CoursesGrid() {
   const [selectedLevel, setSelectedLevel] = useState("all")
   const [priceRange, setPriceRange] = useState([0, 20000000])
 
- const courseData = [
-  { title: "Học C++ Cơ Bản", image: "/images/cpp_basic.jpg" },
-  { title: "Học C++ Nâng Cao", image: "/images/cpp_advanced.jpg" },
-  { title: "Thuật Toán C++", image: "/images/cpp_algorithm.jpg" },
-  { title: "C++ OOP Toàn Tập", image: "/images/cpp_oop.jpg" },
-  { title: "Lập Trình Game Bằng C++", image: "/images/cpp_game.jpg" },
-  { title: "Cấu Trúc Dữ Liệu Với C++", image: "/images/cpp_data_structure.jpg" },
-  { title: "C# API Swagger Cơ Bản", image: "/images/cpp_beginner.jpg" },
-  { title: "C++ Design Patterns", image: "/images/cpp_patterns.jpg" },
-  { title: "Dự Án Cuối Khóa C++", image: "/images/cpp_project.jpg" },
-];
+  // HÀM ĐỔI TIỀN VIỆT
+  const formatVND = (value) => value.toLocaleString("vi-VN") + "đ";
 
-// HÀM ĐỔI TIỀN VIỆT 1.XXX.XXXXđ
-const formatVND = (value) => value.toLocaleString("vi-VN") + "đ";
+  // ✅ Dữ liệu khóa học cố định (giá không random)
+  const courseData = [
+    { title: "Học C++ Cơ Bản", slug: "hoc-c-co-ban", image: "/hinhC++.webp", price: 600000, oldPrice: 900000 },
+    { title: "Học C++ Nâng Cao", slug: "hoc-c-nang-cao", image: "/advanced-c---development.jpg", price: 800000, oldPrice: 1200000 },
+    { title: "Thuật Toán C++", slug: "thuat-toan-cpp", image: "/c---for-beginners.jpg", price: 750000, oldPrice: 1000000 },
+    { title: "Khóa học phát triển React", slug: "react-co-ban", image: "/react-course-preview.jpg", price: 900000, oldPrice: 4000000 },
+    { title: "Lập Trình Game Bằng C++", slug: "lap-trinh-game-bang-cpp", image: "/cpp-course.jpg", price: 700000, oldPrice: 1100000 },
+    { title: "Cấu Trúc Dữ Liệu Với C++", slug: "cau-truc-du-lieu-voi-cpp", image: "/c---programming-course.jpg", price: 850000, oldPrice: 1300000 },
+    { title: "Node.js Backend Development", slug: "nodejs-backend", image: "/nodejs-course.jpg", price: 950000, oldPrice: 1400000 },
+    { title: "MongoDB Database", slug: "mongodb-database", image: "/mongodb-course.jpg", price: 650000, oldPrice: 950000 },
+    { title: "Dự Án Cuối Khóa C++", slug: "du-an-cuoi-khoa-cpp", image: "/placeholder.jpg", price: 1000000, oldPrice: 1600000 },
+  ];
 
-const courses = courseData.map((course, i) => {
-  const priceValue = (Math.floor(Math.random() * 8) + 6) * 100000; // giá khuyến mãi
-  const oldPriceValue = priceValue + (Math.floor(Math.random() * 5) + 20) * 100000; // giá gốc
-
-  return {
+  // ✅ Không random nữa — chỉ map dữ liệu ra
+  const courses = courseData.map((course, i) => ({
     id: i + 1,
     title: course.title,
+    slug: course.slug,
     instructor: "Nguyễn Hải Trường",
     level: "Lập trình",
-    rating: (Math.random() * 5).toFixed(1),
+    rating: (Math.random() * 5).toFixed(1), // có thể để random rating cho sinh động
     students: `${Math.floor(Math.random() * 200) + 50}k`,
     duration: `${Math.floor(Math.random() * 40) + 10} giờ`,
-    price: formatVND(priceValue),
-    oldPrice: formatVND(oldPriceValue),
+    price: formatVND(course.price),
+    oldPrice: formatVND(course.oldPrice),
     image: course.image,
-  };
-});
+  }));
 
-
-
+  // Danh mục và cấp độ (cứng)
   const categories = [
     "Tất cả",
     "Lập trình web",
@@ -57,9 +54,9 @@ const courses = courseData.map((course, i) => {
     "UI/UX Design",
     "Lập trình game",
     "Blockchain & Web3",
-  ]
+  ];
 
-  const levels = ["Tất cả", "Cơ bản", "Trung cấp", "Nâng cao"]
+  const levels = ["Tất cả", "Cơ bản", "Trung cấp", "Nâng cao"];
 
   return (
     <div className="grid lg:grid-cols-4 gap-8">
@@ -140,5 +137,5 @@ const courses = courseData.map((course, i) => {
         </div>
       </div>
     </div>
-  )
+  );
 }

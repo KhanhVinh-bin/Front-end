@@ -59,10 +59,12 @@
     "sweetalert2": "^11.26.2",
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
+    "three": "^0.180.0",
     "vaul": "^0.9.9",
     "xlsx": "^0.18.5",
     "zod": "3.25.67"
   },
+  
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.9",
     "@types/node": "^22",
@@ -74,3 +76,7 @@
     "typescript": "^5"
   }
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 93f084ded18e86d8b5b46d42190a93d8344a5c7a

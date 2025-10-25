@@ -2,29 +2,47 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Star, Users, Clock, Play } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { Star, Users, Clock, Play, ShoppingCart } from "lucide-react"
+import { useAuth } from "@/lib/auth-context"
 
 export default function CourseCard({ course }) {
   const [isHovered, setIsHovered] = useState(false)
+  const { isAuthenticated } = useAuth()
+  const router = useRouter()
+
+  const handleBuyNow = (e) => {
+    e.preventDefault() // Ngăn chặn navigation của Link
+    e.stopPropagation()
+    
+    if (!isAuthenticated()) {
+    const redirectUrl = `/thanhtoan?courseId=${course.id}`
+    router.push(`/login?redirect=${encodeURIComponent(redirectUrl)}`)
+    } else {
+      router.push(`/thanhtoan?courseId=${course.id}`)
+    }
+    localStorage.setItem('token', data.token)
+  }
 
   return (
-    <Link href={`/courses/${course.id}`}>
+    <Link href={`/courses/${course.slug}`}>
       <div
-        className="bg-white rounded-xl overflow-hidden border border-white-200 card-hover"
+        className="bg-white rounded-xl overflow-hidden border border-white-200 card-hover cursor-pointer"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
+
         {/* Course Image */}
         <div className="relative h-48 bg-white-900 overflow-hidden">
           <img
             src={course.image || "/placeholder.svg"}
             alt={course.title}
-            className="w-full h-full object-cover image-zoom"
+            className="w-full h-full object-cover image-zoom transition-transform duration-300"
           />
           {isHovered && (
-            <div className="absolute inset-0 bg-black/50 flex items-center justify-center zoom-in">
+            <div className="absolute inset-0 bg-black/50 flex items-center justify-center zoom-in transition-opacity duration-300">
               <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center">
-                <Play className="w-8 h-8 text-white-900 ml-1" />
+                <Play className="w-8 h-8 text-black ml-1" />
               </div>
             </div>
           )}
@@ -67,3 +85,6 @@ export default function CourseCard({ course }) {
     </Link>
   )
 }
+
+
+ 
