@@ -22,18 +22,23 @@ export default function AdminLoginPage() {
     setError("")
     setSuccess("")
     try {
-      const res = await fetch("/api/admin/login", {
+      const res = await fetch("https://localhost:7166/admin/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ Email: formData.email.trim(), Password: formData.password }),
       })
       const data = await res.json()
-      if (res.ok && data.success) {
+      if (res.ok && data.token) {
         setSuccess("Đăng nhập thành công!")
+        // Lưu token và thông tin người dùng để dùng cho các trang admin
+        try {
+          localStorage.setItem("admin_token", data.token)
+          if (data.user) localStorage.setItem("admin_user", JSON.stringify(data.user))
+        } catch {}
         // Redirect to admin dashboard after successful login
         setTimeout(() => {
           router.push("/admin/dashboard")
-        }, 1000)
+        }, 800)
       } else {
         setError(data.message || "Email hoặc mật khẩu không đúng")
       }
