@@ -206,7 +206,7 @@ export default function XemTruocKhoaHocPage(){
         <div className="gvc-footer-inner">
           <button className="gvc-btn ghost" onClick={() => router.push("/giangvien/khoahoc/noidung")}>Quay lại</button>
           <div className="gvc-step-info">Bước 4 / 4</div>
-          <button className="gvc-btn primary" onClick={() => router.push("/giangvien/khoahoc")}>Tạo khóa học</button>
+          <button className="gvc-btn primary" onClick={() => router.push("/giangvien/khoahoc?created=1")}>Tạo khóa học</button>
         </div>
       </div>
     </div>

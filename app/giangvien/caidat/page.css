@@ -1,15 +1,109 @@
 /* Settings page styles */
-.cd-container { max-width:980px; margin:0 auto }
-.cd-card { background:#fff; border:1px solid #e6e6e6; padding:18px; border-radius:10px; margin-bottom:16px }
-.cd-field { display:block; margin-bottom:12px }
-.cd-input { width:100%; padding:10px; border:1px solid #e6e6e6; border-radius:8px }
-.cd-btn { background:#111827; color:#fff; padding:10px 16px; border-radius:8px; border:none }
-.cd-switch-row { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-top:1px solid #f3f4f6 }
-.cd-switch { position:relative; display:inline-block; width:48px; height:28px }
-.cd-switch input { opacity:0; width:0; height:0 }
-.cd-slider { position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#ccc; transition:.4s; border-radius:28px }
-.cd-slider:before { position:absolute; content:""; height:20px; width:20px; left:4px; bottom:4px; background:white; transition:.4s; border-radius:50% }
-.cd-switch input:checked + .cd-slider { background:#10b981 }
-.cd-switch input:checked + .cd-slider:before { transform:translateX(20px) }
 
-@media (max-width:900px){ .cd-container{ padding:0 16px } }
+.st-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 8px 0 16px;
+}
+
+.st-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.st-card-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+}
+
+.st-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.st-field-title {
+  font-weight: 600;
+  color: #111827;
+}
+
+.st-field {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  align-items: center;
+  gap: 12px;
+}
+
+.st-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #374151;
+}
+
+.st-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+}
+
+.st-input {
+  height: 38px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #f3f4f6;
+  padding: 0 12px;
+  outline: none;
+}
+.st-input::placeholder { color: #9ca3af; }
+.st-input:focus { border-color: #93c5fd; background: #fff; }
+
+.st-actions {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 8px;
+}
+
+.st-btn {
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 10px;
+  border: none;
+  background: #111827;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.st-btn:hover { opacity: 0.95; }
+.st-btn:active { opacity: 0.9; }
+
+/* Danger zone */
+.st-danger {
+  margin-top: 18px;
+  border: 1px solid #fecaca;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.st-danger-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+}
+
+.st-danger h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #991b1b;
+  margin: 0 0 6px 0;
+}
+
+.st-danger p { color: #ef4444; margin: 0; }
+
+.st-btn.danger {
+  background: #ef4444;
+}

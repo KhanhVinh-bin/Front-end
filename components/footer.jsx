@@ -4,7 +4,7 @@ import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from "luci
 export default function Footer() {
   return (
     <footer className="bg-[#000033] text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="w-full px-8 sm:px-10 lg:px-16 py-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div>
@@ -63,7 +63,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/g" className="text-white-300 hover:text-[#06b6d4] transition-colors">
+                <Link href="/about" className="text-white-300 hover:text-[#06b6d4] transition-colors">
                   Giới thiệu
                 </Link>
               </li>
@@ -72,7 +72,7 @@ export default function Footer() {
                   Blog & Tin tức
                 </Link>
               </li>
-              <li>
+              <li>  
                 <Link href="/contact" className="text-white-300 hover:text-[#06b6d4] transition-colors">
                   Liên hệ
                 </Link>

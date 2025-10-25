@@ -1,4 +1,7 @@
 /* Courses page (giangvien/khoahoc) */
+/* Mở rộng nội dung tới mép phải, chỉ áp dụng cho trang khóa học */
+.gv-courses-main { padding: 24px 0 24px 24px; }
+
 .gvc-list { display: grid; gap: 20px; }
 .gvc-card {
   background: #ffffff;

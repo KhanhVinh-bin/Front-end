@@ -218,6 +218,37 @@
 .gv-dot.violet { background: #7c3aed; }
 .gv-dot.lime { background: #84cc16; }
 
+/* Thêm style cho nút breadcrumb toggle tương tự trang Hỗ trợ */
+.gv-dashboard-root .gv-collapse-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  margin-right: 8px;
+  background: transparent;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+}
+.gv-dashboard-root .gv-collapse-btn svg {
+  width: 22px;
+  height: 22px;
+  stroke-width: 1.6;
+}
+
+/* Trạng thái collapsed: ẩn hoặc thu gọn sidebar và điều chỉnh main */
+.gv-dashboard-root.collapsed .gv-sidebar {
+  width: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+}
+.gv-dashboard-root.collapsed .gv-main {
+  margin-left: 0; /* nếu trước đây main dịch trái theo sidebar */
+}
+
 /* Courses page styles moved to giangvien/khoahoc/page.css */
 
 /* Responsive */
@@ -228,3 +259,7 @@
   .gv-dashboard { flex-direction: column; }
   .gv-sidebar { width: 100%; }
 }
+
+/* SVG icons inside tiny charts */
+.gv-area-chart svg, .gv-sparkline svg { width: 100%; height: 100%; display: block; }
+.gv-chart-svg { filter: drop-shadow(0 1px 1px rgba(0,0,0,0.04)); pointer-events: none; }

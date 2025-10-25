@@ -9,7 +9,13 @@ import { getCourseById } from "@/app/(Home)/Data/mockCourses"
 import { useCart } from "@/lib/cart-context"
 import { useAuth } from "@/lib/auth-context"
 
-
+/*
+ * TODO: KẾT NỐI API CHO REVIEWS
+ * - Thay thế mock data reviews bằng API call thực tế
+ * - Endpoint GET /api/courses/{id}/reviews để lấy danh sách đánh giá
+ * - Endpoint POST /api/courses/{id}/reviews để gửi đánh giá mới
+ * - Cập nhật state reviews sau khi submit thành công
+ */
 
 export default function CourseDetailPage() {
   const params = useParams()
@@ -17,14 +23,15 @@ export default function CourseDetailPage() {
   const { addToCart, isInCart } = useCart()
   const { isAuthenticated } = useAuth()
   const [showAuthModal, setShowAuthModal] = useState(false)
-  const [imageLoaded, setImageLoaded] = useState(false)
+  const [imageLoaded, setImageLoaded] = useState(false) 
   const [activeTab, setActiveTab] = useState("overview")
   const [course, setCourse] = useState(null)
   const [loading, setLoading] = useState(true)
   const [rating, setRating] = useState(0)
   const [reviewContent, setReviewContent] = useState("")
   const [hoveredStar, setHoveredStar] = useState(0)
-  const [reviews] = useState([
+  const [submittingReview, setSubmittingReview] = useState(false)
+  const [reviews, setReviews] = useState([
     {
       id: 1,
       user: {
@@ -44,16 +51,164 @@ export default function CourseDetailPage() {
       rating: 4,
       content: "Giảng viên dạy rất tốt.",
       date: "1 tuần trước"
-    }
+    },
+    {
+      id: 3,
+      user: {
+        name: "Trần Thị C",
+        avatar: "/placeholder-user.jpg"
+      },
+      rating: 5,
+      content: "Khóa học rất hay, nội dung phong phú và thực tế. Tôi đã học được rất nhiều kiến thức bổ ích từ khóa học này.",
+      date: "3 ngày trước"
+    },
+    {
+      id: 4,
+      user: {
+        name: "Lê Văn D",
+        avatar: "/placeholder-user.jpg"
+      },
+      rating: 3,
+      content: "Khóa học ổn, nhưng có một số phần hơi khó hiểu. Mong giảng viên có thể giải thích rõ hơn.",
+      date: "5 ngày trước"
+    },
+    {
+      id: 5,
+      user: {
+        name: "Phạm Thị E",
+        avatar: "/placeholder-user.jpg"
+      },
+      rating: 4,
+      content: "Nội dung khóa học rất tốt, giảng viên nhiệt tình. Tuy nhiên, tốc độ giảng hơi nhanh một chút.",
+      date: "1 tuần trước"
+    },
+    {
+      id: 6,
+      user: {
+        name: "Hoàng Văn F",
+        avatar: "/placeholder-user.jpg"
+      },
+      rating: 5,
+      content: "Tuyệt vời! Đây là khóa học React tốt nhất mà tôi từng tham gia. Giảng viên rất chuyên nghiệp.",
+      date: "2 tuần trước"
+    },
+    {
+      id: 7,
+      user: {
+        name: "Ngô Thị G",
+        avatar: "/placeholder-user.jpg"
+      },
+      rating: 2,
+      content: "Khóa học không như mong đợi. Nội dung hơi cũ và thiếu thực hành.",
+      date: "3 tuần trước"
+    },
+    
   ])
 
-  const handleSubmitReview = (e) => {
+  const handleSubmitReview = async (e) => {
     e.preventDefault()
-    // TODO: Gửi đánh giá lên server
-    console.log("Submitted review:", { rating, reviewContent })
-    // Reset form
-    setRating(0)
-    setReviewContent("")
+    
+    // Kiểm tra validation
+    if (rating === 0) {
+      alert("Vui lòng chọn số sao đánh giá!")
+      return
+    }
+    
+    if (!reviewContent.trim()) {
+      alert("Vui lòng nhập nội dung đánh giá!")
+      return
+    }
+
+    try {
+      setSubmittingReview(true)
+      
+      // Enhanced validation
+      if (!rating || rating < 1 || rating > 5) {
+        alert("Vui lòng chọn số sao từ 1 đến 5!")
+        return
+      }
+      
+      if (!reviewContent.trim() || reviewContent.trim().length < 10) {
+        alert("Vui lòng nhập nội dung đánh giá ít nhất 10 ký tự!")
+        return
+      }
+      
+      // TODO: KẾT NỐI API - Gửi đánh giá lên server
+      // const response = await fetch('/api/reviews', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     'Authorization': `Bearer ${userToken}` // Lấy từ auth context
+      //   },
+      //   body: JSON.stringify({
+      //     courseId: course.id,
+      //     rating: rating,
+      //     content: reviewContent.trim(),
+      //     userId: user.id // Lấy từ auth context
+      //   })
+      // })
+      // 
+      // if (!response.ok) {
+      //   throw new Error('Không thể gửi đánh giá')
+      // }
+      // 
+      // const result = await response.json()
+      
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
+      // MOCK DATA - Tạm thời log ra console
+      console.log("Submitted review:", { 
+        courseId: course?.id,
+        rating, 
+        reviewContent: reviewContent.trim(),
+        timestamp: new Date().toISOString()
+      })
+      
+      // Tạo đánh giá mới để thêm vào danh sách
+      const newReview = {
+        id: Date.now(), // Tạm thời dùng timestamp làm ID
+        user: {
+          name: "Bạn", // TODO: Lấy tên thật từ auth context
+          avatar: "/placeholder-user.jpg" // TODO: Lấy avatar thật từ auth context
+        },
+        rating: rating,
+        content: reviewContent.trim(),
+        date: new Date().toLocaleDateString('vi-VN'),
+        isNew: true // Đánh dấu đây là review mới
+      }
+      
+      // Thêm đánh giá mới vào đầu danh sách
+      setReviews(prevReviews => [newReview, ...prevReviews])
+      
+      // Hiển thị thông báo thành công
+      alert("Đánh giá của bạn đã được gửi thành công!")
+      
+      // TODO: Sau khi kết nối API, thêm logic để tự động loại bỏ badge "Mới" sau 10 giây
+      // setTimeout(() => {
+      //   setReviews(prevReviews => 
+      //     prevReviews.map(r => 
+      //       r.id === newReview.id ? { ...r, isNew: false } : r
+      //     )
+      //   )
+      // }, 10000)
+      
+      // Reset form after successful submission
+      setRating(0)
+      setReviewContent("")
+      setHoveredStar(0)
+      
+      // TODO: Sau khi kết nối API, thay thế logic trên bằng:
+      // 1. Gửi request lên server
+      // 2. Nhận response với review đã được tạo (có ID thật)
+      // 3. Cập nhật state reviews với data từ server
+      
+    } catch (error) {
+      console.error("Error submitting review:", error)
+      alert("Có lỗi xảy ra khi gửi đánh giá. Vui lòng thử lại!")
+    } finally {
+      setSubmittingReview(false)
+    }
   }
 
   useEffect(() => {
@@ -235,13 +390,13 @@ export default function CourseDetailPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             {/* Tabs */}
-            <div className="flex gap-4 border-b border-white-300 mb-8">
+            <div className="flex gap-4 border-b border-gray-300 mb-8">
               <button
                 onClick={() => setActiveTab("overview")}
                 className={`px-6 py-3 font-semibold ${
                   activeTab === "overview"
                     ? "border-b-2 border-purple-600 text-purple-600"
-                    : "text-white-600 hover:text-purple-600 transition-colors"
+                    : "text-gray-600 hover:text-purple-600 transition-colors"
                 }`}
               >
                 Tổng quan
@@ -251,7 +406,7 @@ export default function CourseDetailPage() {
                 className={`px-6 py-3 font-semibold ${
                   activeTab === "content"
                     ? "border-b-2 border-purple-600 text-purple-600"
-                    : "text-white-600 hover:text-purple-600 transition-colors"
+                    : "text-gray-600 hover:text-purple-600 transition-colors"
                 }`}
               >
                 Nội dung
@@ -261,7 +416,7 @@ export default function CourseDetailPage() {
                 className={`px-6 py-3 font-semibold ${
                   activeTab === "instructor"
                     ? "border-b-2 border-purple-600 text-purple-600"
-                    : "text-white-600 hover:text-purple-600 transition-colors"
+                    : "text-gray-600 hover:text-purple-600 transition-colors"
                 }`}
               >
                 Giảng viên
@@ -271,7 +426,7 @@ export default function CourseDetailPage() {
                 className={`px-6 py-3 font-semibold ${
                   activeTab === "reviews"
                     ? "border-b-2 border-purple-600 text-purple-600"
-                    : "text-white-600 hover:text-purple-600 transition-colors"
+                    : "text-gray-600 hover:text-purple-600 transition-colors"
                 }`}
               >
                 Đánh giá
@@ -280,67 +435,151 @@ export default function CourseDetailPage() {
 
             {/* Reviews Tab */}
             {activeTab === "reviews" && (
-              <div className="bg-white rounded-xl shadow-md p-8 mb-8 fade-in-element ">
-                {isAuthenticated ? (
-                  <div>
-                    <h2 className="text-2xl font-bold mb-6">Đánh giá của bạn</h2>
-                    <form onSubmit={handleSubmitReview} className="space-y-6">
-                      {/* Rating Stars */}
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Đánh giá của bạn
-                        </label>
-                        <div className="flex gap-1">
-                          {[1, 2, 3, 4, 5].map((star) => (
-                            <button
-                              key={star}
-                              type="button"
-                              onClick={() => setRating(star)}
-                              onMouseEnter={() => setHoveredStar(star)}
-                              onMouseLeave={() => setHoveredStar(0)}
-                              className="text-2xl focus:outline-none"
-                            >
-                              {star <= (hoveredStar || rating) ? "★" : "☆"}
-                            </button>
-                          ))}
+              <div className="space-y-8" style={{color: '#000'}}>
+                {/* User Review Form */}
+                <div className="bg-white rounded-xl shadow-md p-8" style={{color: '#000'}}>
+                  {isAuthenticated ? (
+                    <div>
+                      <h2 className="text-2xl font-bold mb-6 text-gray-900" style={{color: '#111827'}}>Đánh giá của bạn</h2>
+                      <form onSubmit={handleSubmitReview} className="space-y-6">
+                        {/* Rating Stars */}
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2" style={{color: '#374151'}}>
+                            Đánh giá của bạn
+                          </label>
+                          <div className="flex gap-1">
+                            {[1, 2, 3, 4, 5].map((star) => (
+                              <button
+                                key={star}
+                                type="button"
+                                onClick={() => setRating(star)}
+                                onMouseEnter={() => setHoveredStar(star)}
+                                onMouseLeave={() => setHoveredStar(0)}
+                                className="text-2xl focus:outline-none text-yellow-400 hover:text-yellow-500"
+                              >
+                                {star <= (hoveredStar || rating) ? "★" : "☆"}
+                              </button>
+                            ))}
+                          </div>
                         </div>
-                      </div>
 
-                      {/* Review Content */}
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Nội dung đánh giá
-                        </label>
-                        <textarea
-                          value={reviewContent}
-                          onChange={(e) => setReviewContent(e.target.value)}
-                          rows={4}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                          placeholder="Chia sẻ trải nghiệm học tập của bạn..."
-                        />
-                      </div>
+                        {/* Review Content */}
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2" style={{color: '#374151'}}>
+                            Nội dung đánh giá
+                          </label>
+                          <textarea
+                            value={reviewContent}
+                            onChange={(e) => setReviewContent(e.target.value)}
+                            rows={4}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            placeholder="Chia sẻ trải nghiệm học tập của bạn..."
+                          />
+                        </div>
 
-                      {/* Submit Button */}
+                        {/* Submit Button */}
+                        <button
+                          type="submit"
+                          disabled={submittingReview}
+                          className={`px-6 py-3 rounded-lg transition-colors ${
+                            submittingReview 
+                              ? "bg-gray-400 text-gray-200 cursor-not-allowed" 
+                              : "bg-purple-600 text-white hover:bg-purple-700"
+                          }`}
+                        >
+                          {submittingReview ? (
+                            <div className="flex items-center gap-2">
+                              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                              Đang gửi...
+                            </div>
+                          ) : (
+                            "Gửi đánh giá"
+                          )}
+                        </button>
+                      </form>
+                    </div>
+                  ) : (
+                    <div className="text-center py-8">
+                      <h2 className="text-xl font-semibold mb-4 text-gray-900" style={{color: '#111827'}}>Đăng nhập để đánh giá khóa học</h2>
+                      <p className="text-gray-600 mb-6" style={{color: '#4b5563'}}>Bạn cần đăng nhập để có thể đánh giá khóa học này</p>
                       <button
-                        type="submit"
+                        onClick={() => router.push('/login?redirect=' + encodeURIComponent(window.location.pathname))}
                         className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
                       >
-                        Gửi đánh giá
+                        Đăng nhập ngay
                       </button>
-                    </form>
+                    </div>
+                  )}
+                </div>
+
+                {/* Reviews List */}
+                <div className="bg-white rounded-xl shadow-md p-8 fade-in-element">
+                  <h2 className="text-2xl font-bold mb-6 text-gray-900">Đánh giá từ học viên ({reviews.length})</h2>
+                  <div className="space-y-6">
+                    {reviews && reviews.length > 0 ? (
+                      reviews.map((review) => (
+                        <div 
+                          key={review.id} 
+                          className={`border-b border-gray-200 pb-6 last:border-b-0 last:pb-0 ${
+                            review.isNew ? 'bg-green-50 border-green-200 rounded-lg p-4 mb-4' : ''
+                          }`}
+                        >
+                          <div className="flex items-start gap-4">
+                            {/* User Avatar */}
+                            <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-gray-200">
+                              <img 
+                                src={review.user.avatar} 
+                                alt={review.user.name}
+                                className="w-full h-full object-cover"
+                                onError={(e) => {
+                                  e.target.style.display = 'none';
+                                  e.target.parentElement.innerHTML = '<div class="w-full h-full bg-gray-300 flex items-center justify-center text-gray-600 text-sm font-bold">' + review.user.name.charAt(0) + '</div>';
+                                }}
+                              />
+                            </div>
+                            
+                            {/* Review Content */}
+                            <div className="flex-1">
+                              <div className="flex items-center justify-between mb-2">
+                                <div className="flex items-center gap-2">
+                                  <h4 className="font-semibold text-gray-900">{review.user.name}</h4>
+                                  {review.isNew && (
+                                    <span className="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full font-medium">
+                                      Mới
+                                    </span>
+                                  )}
+                                </div>
+                                <span className="text-sm text-gray-500">{review.date}</span>
+                              </div>
+                              
+                              {/* Rating Stars */}
+                              <div className="flex items-center gap-1 mb-3">
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                  <span
+                                    key={star}
+                                    className={`text-lg ${
+                                      star <= review.rating ? "text-yellow-400" : "text-gray-300"
+                                    }`}
+                                  >
+                                    ★
+                                  </span>
+                                ))}
+                                <span className="ml-2 text-sm text-gray-600">({review.rating}/5)</span>
+                              </div>
+                              
+                              {/* Review Text */}
+                              <p className="text-gray-700 leading-relaxed">{review.content}</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="text-center py-8">
+                        <p className="text-gray-500">Chưa có đánh giá nào cho khóa học này.</p>
+                      </div>
+                    )}
                   </div>
-                ) : (
-                  <div className="text-center py-8">
-                    <h2 className="text-xl font-semibold mb-4">Đăng nhập để đánh giá khóa học</h2>
-                    <p className="text-gray-600 mb-6">Bạn cần đăng nhập để có thể đánh giá khóa học này</p>
-                    <button
-                      onClick={() => router.push('/login?redirect=' + encodeURIComponent(window.location.pathname))}
-                      className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
-                    >
-                      Đăng nhập ngay
-                    </button>
-                  </div>
-                )}
+                </div>
               </div>
             )}
 

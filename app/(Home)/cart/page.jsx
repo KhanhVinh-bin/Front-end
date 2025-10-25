@@ -70,19 +70,6 @@ export default function CartPage() {
                       <div className="flex items-center justify-between">
                         <p className="text-lg font-bold text-[#4f46e5]">{formatPrice(item.price)}</p>
                         <div className="flex items-center gap-3">
-                          <button
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="w-8 h-8 rounded-lg border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
-                          >
-                            <Minus className="w-4 h-4" />
-                          </button>
-                          <span className="w-8 text-center font-medium">{item.quantity}</span>
-                          <button
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="w-8 h-8 rounded-lg border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
-                          >
-                            <Plus className="w-4 h-4" />
-                          </button>
                         </div>
                       </div>
                     </div>
